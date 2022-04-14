@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+  button.left:hover{     
+    background: #E25457 !important;
+    color: white !important;
+    transition: 0.2s ease-in-out; }
+  
+  button.right:hover{     
+    background: #4E68D6 !important;
+    color: white !important;
+    transition: 0.2s ease-in-out; }
+
+  .plus:hover{
+    color: #C88491 !important;
+  }
+
+  .play:hover{
+    background-color: #E7B4C5 !important;
+  }
+</style>
+{% endblock style %}
+
+
+{% block content %}
+<div class="w-75 mx-auto mt-5">
+  <div style="width=40%;" class="d-flex justify-content-center mb-4">
+    <img class="w-50" src="{% static 'eithergame.png' %}" alt="logo">
+  </div>
+  <br>
+  <div class="w-100 d-flex flex-column align-items-center justify-content-center" style="border: solid 2px; border-color: #DFB7BF; border-radius: 20px; height:300px;">
+    <h3>{{rand_vote.subject}}</h3>
+    <div class="progress mx-auto mt-3" style="width: 95%; height:200px !important;">
+      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width:50%; height:100% !important;">
+        <form action="{% url 'votes:detail_result' rand_vote.pk %}" method="POST" style="width:100%; height:100% !important;">
+          {% csrf_token %}
+          <button class="btn left" style="width:100%; height:100%; background-color: #F2B4B5; font-weight:500; font-size:20px; color:#4D4949;" name="choice" value="{{rand_vote.choice_one}}">{{ rand_vote.choice_one }}</button>
+        </form>
+      </div>
+      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width:50%; height:100% !important;">
+        <form action="{% url 'votes:detail_result' rand_vote.pk %}" method="POST" style="width:100%; height:100% !important;">
+          {% csrf_token %}
+          <button class="btn right text-white" style="width:100%; height:100%; background-color: #8496E2; font-weight:500; font-size:20px;"  name="choice" value="{{rand_vote.choice_two}}">{{ rand_vote.choice_two }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-baseline mt-5 mx-auto" style="width:97%;">
+    <h4 class="" style="font-weight:500;">Game LIST</h4>
+    <a href="{% url 'votes:create' %}" class="plus" style="color:#E7B4C5; font-size: 28px"><i class="bi bi-patch-plus-fill"></i></a>
+  </div>
+
+
+  <hr class="mt-1 mb-3 mx-auto" style="border: 3px; width:98%">
+
+  {% for vote in votes %}
+  <div class="mx-auto my-2 d-flex justify-content-between align-items-center" style="border: solid 1px #BCABE2; border-radius: 10px; width:98%; height:90px;">
+    <div class="d-flex flex-column mx-3">
+      <h4 class="mb-1">{{ vote.subject }}</h4>
+      <small>{{ vote.created_at }}</small>
+    </div>
+    <a href="{% url 'votes:detail' vote.pk %}" class="play btn mx-3 my-auto d-flex align-items-center justify-content-center" style="height:70%; width: 100px; background-color: #C88491; font-size:20px; color:white;">PLAY</a>
+  </div>
+  {% endfor %}
+</div>
+<br>
+<br>
+{% endblock content %}

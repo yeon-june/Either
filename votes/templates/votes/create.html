@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block style %}
+<style>
+  button.create:hover{     
+    background-color: #CCE6DF !important;
+    color: #4F4B4B !important;
+    transition: 0.2s ease-in-out; }
+</style>
+{% endblock style %}
+
+
+{% block content %}
+<div class="w-75 mx-auto mt-3 mb-5">
+  <div class="d-flex justify-content-start align-items-baseline">
+    <a href="{% url 'votes:index' %}" style="text-decoration:none; font-size:17px; color:#4F4B4B;">🏘HOME</a>
+  </div>
+  <div class="mx-auto d-flex justify-content-center mt-3 mb-4">
+    <h2 style="font-weight:600; color:#4F4B4B;">Create Your Vote</h2>
+  </div>
+  <form action="" method="POST">  
+    {% csrf_token %}
+    {{form.as_p}}
+    <div class="d-flex justify-content-end">
+      <button class="btn create" style="color:white; background-color:#5A9892";>submit</button>
+    </div>
+  </form>
+</div>
+{% endblock content %}
+
+
