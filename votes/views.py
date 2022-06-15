@@ -7,7 +7,7 @@ import random
 
 # Create your views here.
 def index(request):
-    votes = Vote.objects.all()
+    votes = Vote.objects.all().order_by('-created_at')
     rand_vote = Vote.objects.get(pk=random.choice(Vote.objects.values_list('pk'))[0])
 
     context = {
